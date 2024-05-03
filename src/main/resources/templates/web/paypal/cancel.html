@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+<body>
+	<!--Thêm dòng này vào-->
+	<div layout:fragment="content">
+		<div class="container">
+			<section class="row gx-3 mt-5 mb-5">
+					<div class="ui middle aligned center aligned grid">
+						<div class="ui eight wide column">
+							<form class="ui large form">
+								<div class="ui icon negative message">
+									<i class="warning icon"></i>
+									<div class="content">
+										<div class="header">
+											Oops! Something went wrong.
+										</div>
+										<p>Payment failed. Please check your account and shopping cart again</p>
+									</div>
+								</div>
+								<a class="ui large teal submit fluid button" th:href="@{/home}">Try again</a>
+							</form>
+						</div>
+					</div>
+			</section>
+		</div>
+	</div>
+</body>
+</html>

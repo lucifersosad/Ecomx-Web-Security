@@ -1,0 +1,15 @@
+.product-admin table {
+	overflow-x: scroll;
+}
+
+.product-admin .site-blocks-table {
+    overflow: auto;
+}
+
+.product-admin .table-desc {
+    overflow: auto;
+}
+
+.product-admin .input-desc {
+    display: block;
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+	
+	<!--Thêm dòng này vào-->
+	<div layout:fragment="content" class="cart">
+		<div class="site-section mt-5">
+	      <div class="container" th:if="${list.size() > 0}">
+	        <div class="row mb-5">
+	          <form class="col-md-12" method="post">
+	            <div class="site-blocks-table">
+	              <table class="table table-bordered">
+	                <thead>
+	                  <tr>
+	                    <th class="product-thumbnail"></th>
+	                    <th class="product-name">Sản phẩm</th>
+	                    <th class="product-price">Giá</th>
+	                    <th class="product-quantity">Số lượng</th>
+	                    <th class="product-total">Tổng</th>
+	                    <th class="product-remove">Hủy sản phẩm</th>
+	                  </tr>
+	                </thead>
+	                <tbody>
+	                  <tr th:each="item : ${list}">
+	                    <td class="product-thumbnail">
+	                      <img th:src="@{${item.product.image_link}}" alt="${item.product.name}" class="img-fluid">
+	                    </td>
+	                    <td class="product-name">
+	                      <p class="text-black">[[${item.product.name}]]</p>
+	                    </td>
+	                    <td>[[${#numbers.formatDecimal(item.product.price, 0, 0)}]].000 đ</td>
+	                    <td class="">
+	                      <div class="input-group" style="max-width: 120px;margin-left: auto;margin-right:auto;">
+	                        <div class="input-group-prepend">
+	                          <button class="btn btn-outline-primary js-btn-minus btn-quantity" style="border-top-right-radius: 0;border-bottom-right-radius: 0;" type="button">&minus;</button>
+	                        </div>
+	                        <input type="text" class="form-control text-center quantityInputCart" th:value="${item.quantity.quantity}" th:attr="data-proid=${item.product.proId}, data-stock=${item.product.stock}"  placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+	                        <div class="input-group-append">
+	                          <button class="btn btn-outline-primary js-btn-plus btn-quantity" style="border-top-left-radius: 0;border-bottom-left-radius: 0;" type="button">&plus;</button>
+	                        </div>
+	                      </div>
+	
+	                    </td>
+	                    <td>[[${#numbers.formatDecimal(item.tong, 0, 'POINT', 0, 'POINT')}]].000 đ</td>
+	                    <td><a th:href="@{'cart/deleteItem/' + ${item.product.proId}}" class="btn btn-primary btn-auto btn-sm btn-remove"><strong>X</strong></a></td>
+	                  </tr>
+	                </tbody>
+	              </table>
+	            </div>
+	          </form>
+	        </div>
+	
+	        <div class="row">
+	          <div class="col-md-6">
+	            <div class="row mb-5">
+	              <div class="col-md-6">
+	                <button class="btn btn-outline-primary btn-sm btn-block btn-back">← Tiếp tục xem sản phẩm</button>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="col-md-6 pl-5">
+	            <div class="row justify-content-end">
+	              <div class="col-md-7">
+	                <div class="row">
+	                  <div class="col-md-12 text-end border-bottom mb-5">
+	                    <h4 class="text-black text-uppercase">Cộng giỏ hàng</h4> 
+	                  </div>
+	                </div>
+	                <div class="row mb-3">
+	                  <div class="col-md-6">
+	                    <span class="text-black">Tạm tính</span>
+	                  </div>
+	                  <div class="col-md-6 text-end">
+	                    <strong class="text-black">[[${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')}]].000 đ</strong>
+	                  </div>
+	                </div>
+	                <div class="row mb-5">
+	                  <div class="col-md-6">
+	                    <span class="text-black">Tổng</span>
+	                  </div>
+	                  <div class="col-md-6 text-end">
+	                    <strong class="text-black">[[${#numbers.formatDecimal(total, 0, 'POINT', 0, 'POINT')}]].000 đ</strong>
+	                  </div>
+	                </div>
+	
+	                <div class="row">
+	                  <div class="col-md-12">
+	                    <a class="btn btn-primary btn-block btn-yellow" th:href="@{CheckOut}">Tiến hành thanh toán</a>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	      <div class="container" th:if="${list.size() == 0}">
+			  <p class="text-center">Không có sản phẩm nào trong giỏ hàng</p>
+		  </div>
+	    </div>
+	</div>
+</body>
+
+</html>

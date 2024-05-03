@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>SB Admin 2 - Dashboard</title>
+	<link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}" />
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/admin.css}" />
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link rel="stylesheet" type="text/css" th:href="@{/global/plugins/select2/select2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css}" />
+
+	<!-- END PAGE LEVEL STYLES -->
+</head>
+
+<body id="page-top">
+	<div id="wrapper">
+		<ul th:replace="admin/fragments/sidebar :: sidebar"></ul>
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<header class="row">
+					<div class="col">
+						<div th:replace="admin/fragments/header :: header"></div>
+					</div>
+				</header>
+				<section layout:fragment="content"></section>
+			</div>
+		</div>
+	</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	 <script th:inline="javascript">
+		 /*<![CDATA[*/
+        var myVariable = /*[[${totalMontly}]]*/ '';
+        /*]]>*/
+      // Example data
+      var chartData = {
+        labels: [
+    "January", "February", "March", "April",
+    "May", "June", "July", "August",
+    "September", "October", "November", "December"
+],
+        datasets: [
+          {
+            label: "Earning ",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            borderColor: "rgba(75, 192, 192, 1)",
+            borderWidth: 1,
+            data: myVariable,
+          },
+        ],
+      };
+
+      // Get the canvas element
+      var ctx = document.getElementById("myAreaChart").getContext("2d");
+
+      // Create the area chart
+      var myAreaChart = new Chart(ctx, {
+        type: "line", // You can use 'line' for a line chart or 'bar' for a bar chart
+        data: chartData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+    <script th:inline="javascript">
+		/*<![CDATA[*/
+        var myVariable = /*[[${totalQuarter}]]*/ '';
+        /*]]>*/
+    // Example data
+    var pieData = {
+      labels: ['Quarter 1', 'Quarter 2', 'Quarter 3','Quarter 4'],
+      datasets: [{
+        data: myVariable	, 
+        backgroundColor: ['#007bff', '#28a745', '#17a2b8','#FF99FF']
+      }]
+    };
+
+    // Get the canvas element
+    var ctx = document.getElementById('myPieChart').getContext('2d');
+
+    // Create the pie chart
+    var myPieChart = new Chart(ctx, {
+      type: 'pie',
+      data: pieData,
+      options: {
+        legend: {
+          position: 'bottom',
+        }
+      }
+    });
+  </script>
+	<script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+	<script th:src="@{https://code.jquery.com/jquery-3.7.1.min.js}" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<!-- MDB -->
+	<!--<script type="text/javascript"
+		th:src="@{https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js}"></script>-->
+	<script type="text/javascript" th:src="@{/js/sb-admin-2.js}"></script>
+	<script type="text/javascript" th:src="@{/js/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	
+	<script type="text/javascript" th:src="@{/js/vendor/jquery-easing/jquery.easing.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/vendor/jquery/jquery.min.js}"></script>
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script type="text/javascript" th:src="@{/global/plugins/select2/select2.min.js}"></script>
+	<script type="text/javascript" th:src="@{/global/plugins/datatables/media/js/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js}"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<script th:src="@{/admin/pages/scripts/table-managed.js}"></script>
+	<script>
+	jQuery(document).ready(function() {
+	TableManaged.init(); 
+	});
+	</script>
+	
+</body>
+</html>

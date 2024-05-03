@@ -1,0 +1,10 @@
+:root {
+	--color-primary: #FBA1B7;
+	--color-secondary: #ffdbaa;
+	--color-green: #7E9C59;
+	--color-secondary-hover: #d26e4b;
+}
+
+.form-control:disabled {
+	background-color: #ddd !important;
+}

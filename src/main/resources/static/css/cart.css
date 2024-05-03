@@ -1,0 +1,82 @@
+.cart .btn-remove {
+	border-radius: 50%;
+	color: var(--color-primary) !important;
+	border: 2px solid var(--color-primary);
+	background-color: #fff !important;
+	font-size: 10px !important;
+}
+
+.site-section .product-name {
+	max-width: 300px;
+}
+
+.site-section .product-name p {
+	text-align: start;
+	margin-bottom: 0;
+}
+.site-section .btn {
+	height: 43px;
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.site-section .btn-block{
+	width: 100%;
+}
+
+.site-section .btn-auto{
+	height: auto !important;
+}
+
+.site-section .btn-primary{
+    color: #fff;
+    background-color: #FBA1B7;
+    border-color: #FBA1B7;
+}
+
+.site-section .btn-outline-primary{
+	color: #FBA1B7;
+    background-color: transparent;
+    background-image: none;
+    border-color: #FBA1B7;
+}
+
+.site-section .btn-grey{
+	color: #ccc;
+    background-color: transparent;
+    background-image: none;
+    border-color: #ccc;
+}
+
+.site-section .btn-yellow{
+	color: #fff;
+    background-color: #ffdbaa;
+    border-color: #ffdbaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.site-section .form-control {
+	height: 43px;
+	border: 1px solid #ddd !important;
+}
+
+.site-section table input.form-control {
+	border-top-color: var(--color-primary) !important;
+	border-bottom-color: var(--color-primary) !important;
+	border-right: none !important;
+}
+
+.cart .btn-quantity:active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.cart .btn-back:active {
+    background-color: #fff;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}

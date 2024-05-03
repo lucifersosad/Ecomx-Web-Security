@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+
+	<!--Thêm dòng này vào-->
+	<div layout:fragment="content" class="home">
+
+		<!--Viết nội dung từ đây-->
+		<div class="hero-carousel" >
+			<div style="height: 600px;">
+				<img class="img-fluid" th:src="@{https://thocosmetics.com/wp-content/uploads/2023/11/banner-3.png}"/>
+			</div>
+			<div style="height: 600px;">
+				<img class="img-fluid" th:src="@{https://thocosmetics.com/wp-content/uploads/2023/11/banner-2.png}"/>
+			</div>
+			<div style="height: 600px;">
+				<img class="img-fluid" th:src="@{https://thocosmetics.com/wp-content/uploads/2023/11/banner-4.png}"/>
+			</div>
+			<div style="height: 600px;">
+				<img class="img-fluid" th:src="@{https://thocosmetics.com/wp-content/uploads/2023/11/banner-5.png}"/>
+			</div>
+		</div>
+		
+		<div class="container">	
+			
+			
+			<section class="row mt-5">
+				<div class="col-md-6 col-12">
+					<h4 class="text-black">
+						<strong>Đôi nét về chúng tôi</strong>
+					</h4>
+					<p>
+						<span style="font-weight: 400;">Chào mừng bạn đến với </span>
+						<b>Ori Cosmetics</b>
+						<span style="font-weight: 400;"> 
+							– nơi nâng tầm vẻ đẹp tự nhiên và tự tin. Chúng tôi là một doanh nghiệp đam mê về mỹ phẩm, cam kết mang đến cho bạn những sản phẩm chất lượng hàng đầu và dịch vụ tận tâm.
+						</span>
+					</p>
+					<p>
+						<span style="font-weight: 400;">Tại </span>
+						<b>Ori Cosmetics</b>
+						<span style="font-weight: 400;">
+							, chúng tôi hiểu rằng làn da là vốn quý giá của mỗi người, và việc chăm sóc da là một phần quan trọng trong cuộc sống. Chính vì vậy, chúng tôi tự hào cung cấp một loạt sản phẩm mỹ phẩm tự nhiên và chăm sóc da chất lượng cao, từ các thương hiệu uy tín trên thị trường.		
+						</span>
+					</p>
+					<p>
+						<span style="font-weight: 400;">Không chỉ làm đẹp bên ngoài, chúng tôi còn coi trọng việc tạo dựng niềm tin và tự tin bên trong bạn. Chúng tôi sẵn sàng tư vấn và hỗ trợ bạn trong việc lựa chọn sản phẩm phù hợp nhất cho làn da của bạn.</span>
+					</p>
+					<p>
+						<span style="font-weight: 400;">Chất lượng và sự hài lòng của khách hàng luôn là ưu tiên hàng đầu tại </span>
+						<b>Ori Cosmetics</b>
+						<span style="font-weight: 400;">. Chúng tôi cam kết đem đến trải nghiệm mua sắm đáng nhớ và giúp bạn thực hiện cuộc hành trình làm đẹp của riêng mình. Hãy đồng hành cùng chúng tôi và khám phá vẻ đẹp tự nhiên tại </span>
+						<b>Ori Cosmetics</b>
+						<span style="font-weight: 400;"> ngay hôm nay!</span>
+					</p>
+				</div>
+				<div class="col-md-6 col-12">
+					<div class="text-end">
+						<img class="img-fluid" th:src="@{https://thocosmetics.com/wp-content/uploads/2023/11/Thiet-ke-chua-co-ten.jpg}">
+					</div>
+				</div>
+			</section>
+			
+			
+			
+			<section class="mt-5 mb-5 section-category">
+				<h3 class="section-title section-title-center mt-5 mb-5">
+					<b></b>
+					<span class="section-title-main">Danh mục</span>
+					<b></b>
+				</h3>
+				<div class="category-carousel">
+					<div class="card" style="width: 16rem;" th:each="category : ${categories}">
+						<a th:href="@{'/web/product/' + ${category.cateId} + '/page/1' }">
+							<img th:src="${category.logo}" class="card-img-top" alt="category_logo">
+							<div class="card-body">
+								<h5 class="card-title">[[${category.name}]]</h5>	  
+							</div>
+						</a>
+				</div>
+			</section>
+			
+			<section class="section-product-order">
+				<div class="container">
+					<div class="flash-sale">
+						<div class="flash-sale-title">Sản phẩm giảm giá sốc</di>
+						<div class="product-carousel ">
+							<div class="card position-relative" th:each="product : ${products}" >
+								<span class="badge text-bg-danger position-absolute" style="top: 0; right: 0;">[(${product.sale})]%</span>
+								<a th:href="@{/web/product/detail/{proId}(proId=${product.proId})}">
+									<img th:src="${product.image_link}" class="card-img-top rounded-2" style="aspect-ratio: 1/1; width: 100%; height: auto; object-fit: contain;"/>
+								</a>
+								<div class="card-body">
+									<a th:href="@{/web/product/detail/{proId}(proId=${product.proId})}">
+										<h5 class="card-title">[(${product.name})]</h5>
+									</a>							
+									<div style="display: inline-block;">
+										<p class="card-text mb-0">
+											<span class="card-price-new" th:text="${#numbers.formatDecimal(product.price * (100 - product.sale) / 100, 0, 0) } + '.000 đ'"></span>
+											<span class="card-price-old" th:text="${#numbers.formatDecimal(product.price, 0, 0)} + '.000 đ'"></span>
+										</p>						
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="mb-5 section-brand mt-5">
+				<h3 class="section-title section-title-center mt-5 mb-5">
+					<b></b>
+					<span class="section-title-main">Nhãn hàng</span>
+					<b></b>
+				</h3>
+				<div class="brand-carousel">
+					<div class="card" style="width: 16rem;" th:each="brand : ${brands}">
+						<a th:href="@{'/web/product/0/page/1?brandID=' + ${brand.brandId}}" style="width: 100%; height: auto;">
+							<img th:src="${brand.logo}" class="card-img-top" alt="brand_logo" style="aspect-ratio: 16/9; width: 16rem; height: auto; object-fit: contain;">
+						</a>
+					</div>
+				</div>
+			</section>
+			
+			<section class="container mt-5 mb-5 section-product-sale">
+				<h3 class="section-title section-title-center mt-5 mb-5">
+					<b></b>
+					<span class="section-title-main">Sản phẩm bán chạy nhất</span>
+					<b></b>
+				</h3>
+				<div class="row gx-3">
+					<div class="col-lg-3 col-md-6 col-sm-6 card-border" th:each="product : ${products}">
+						<div class="card">
+							<a th:href="@{/web/product/detail/{proId}(proId=${product.proId})}" class="image">
+								<img th:src="${product.image_link}" class="card-img-top rounded-2" style="aspect-ratio: 1 / 1" />
+								<div class="overlay">
+									<span th:attr="data-proid=${product.proId}" class="buyNow">Mua ngay</span>
+									<span th:attr="data-proid=${product.proId}" class="addToCart">Thêm vào giỏ hàng</span>
+								</div>
+							</a>
+							<div class="card-body py-0 pt-3">
+								<a th:href="@{/web/product/detail/{proId}(proId=${product.proId})}">
+									<h5 class="card-title">[(${product.name})]</h5>
+								</a>							
+								<div>
+									<p class="card-text mb-0"><strong>Còn lại: </strong>[(${product.stock})] sp</p>
+									<p class="card-text mb-0"><strong>Danh mục: </strong>[(${product.category.name})]</p>
+									<p class="card-text mb-0">
+										<strong>Giá:</strong>
+										<span th:if="${product.sale == 0}" th:text="${#numbers.formatDecimal(product.price, 0, 0)} + '.000 đ'"></span>
+										<span class="text-decoration-line-through" th:text="${#numbers.formatDecimal(product.price, 0, 0)} + '.000 đ'"></span>
+										<span class="text-danger" th:text="${#numbers.formatDecimal(product.price * (100 - product.sale) / 100, 0, 0) } + '.000 đ'"></span>
+									</p>							
+									<p class="text-muted">[(${product.brand.name})]</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="featured mt-2 mb-2" >
+				<div class="row">
+					<div class="col-md-4 col-12">
+						<div class="featured-box text-center">
+							<div class="featured-box__icon">
+								<i class="fa-solid fa-truck-fast"></i>
+							</div>
+							<div class="featured-box__content">
+								<p class="fs-6 text-uppercase text-black featured-box__title">Miễn phí vận chuyển</p>
+								<p>Miễn phí vận chuyển khi đơn hàng đạt giá trị từ 299k. Thời gian giao hàng từ 3 – 4 ngày.</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4 col-12 col-border">
+						<div class="featured-box text-center">
+							<div class="featured-box__icon">
+								<i class="fa-regular fa-circle-check"></i>
+							</div>
+							<div class="featured-box__content">
+								<p class="fs-6 text-uppercase text-black featured-box__title">BẢO HÀNH</p>
+								<p>Chính sách bảo hành khi mua sản phẩm có thể đổi trả trong 7 ngày khi chưa sử dụng sản phẩm và còn giữ hóa đơn.</p>
+							</div>
+							
+						</div>
+					</div>
+					<div class="col-md-4 col-12">
+						<div class="featured-box text-center">
+							<div class="featured-box__icon">
+								<i class="fa-regular fa-credit-card"></i>
+							</div>
+							<div class="featured-box__content">
+								<p class="fs-6 text-uppercase text-black featured-box__title">PHƯƠNG THỨC THANH TOÁN</p>
+								<p>Đa dạng hình thức thanh toán, khách hàng có thể lựa chọn phương thức thanh toán phù hợp.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="text-end mr-2">
+				<button type="button" class="btn btn-primary btn-ykien" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">GỬI PHẢN HỒI</button>
+		</div>
+		
+		
+		
+		<section class="rating">
+			<div class="container">
+				<div class="rating-carousel">
+					<div class="rating__box" th:each="rating : ${ratings}">
+						<ul class="d-flex px-0 rating__star mb-1">
+							<li th:each="i : ${#numbers.sequence(1, rating.rate)}"><i class="fa-solid fa-star"></i></li>
+						</ul>
+						<p class="rating__content mb-1">[[${rating.content}]]</p>
+						<div class="rating__user">
+			            	<strong class="testimonial-name test_name">[[${rating.nickname}]]</strong>
+			            	<span class="testimonial-name-divider"> / </span>             
+			            	<span class="testimonial-company test_company">[[${rating.platform}]]</span>
+			          	</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+
+</html>

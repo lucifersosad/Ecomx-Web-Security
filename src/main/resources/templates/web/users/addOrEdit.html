@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content">
+		
+		
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container-fluid">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800"></h1>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<form action="/web/users/saveOrUpdate" method="POST">
+
+						<div class="card">
+
+							<div class="card-header">
+								<h2 th:text="${user.isEdit ? 'Edit User' : 'Add New User'}">
+								</h2>
+							</div>
+
+							<div class="card-body">
+
+								<div class="mb-3">
+									<label for="userId" class="form-label">user ID:</label>
+									<input type="hidden" th:value="${user.isEdit}">
+									<input type="text" readonly="readonly" class="form-control"
+										th:value="${user.userId}" id="userId" th:name="userId"
+										aria-describedby="userId">
+								</div>
+
+								<div class="mb-3">
+									<label for="username" class="form-label">user Name:</label>
+									<input type="text" class="form-control" th:value="${user.username}"
+										id="username" th:name="username">
+								</div>
+								
+								<div class="mb-3">
+									<label for="fullName" class="form-label">user Name:</label>
+									<input type="text" class="form-control" th:value="${user.fullName}"
+										id="fullName" th:name="fullName">
+								</div>
+								
+								<div class="mb-3">
+									<label for="email" class="form-label">user email:</label>
+									<input type="text" class="form-control" th:value="${user.email}"
+										id="email" th:name="email">
+								</div>
+
+								<div class="mb-3">
+									<label for="phone" class="form-label">user phone:</label>
+									<input type="text" class="form-control" th:value="${user.phone}"
+										id="phone" th:name="phone">
+								</div>
+								<div class="mb-3">
+									<label for="address" class="form-label">user address:</label>
+									<input type="text" class="form-control" th:value="${user.address}"
+										id="address" th:name="address">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="card-footer text-muted">
+							
+							<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>
+								<span th:text="${user.isEdit ? 'Update' : 'Save'}"></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+
+</html>

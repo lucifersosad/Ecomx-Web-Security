@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8">
+</head>
+
+<body>
+	<div th:fragment="header">
+		<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark"
+			arial-label="Furni navigation bar">
+			<div class="container">
+				<a class="navbar-brand" href="/">Ori Shop<span>.</span></a>
+
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+					aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarsFurni">
+					<ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+						<li class="nav-item active">
+							<a class="nav-link" href="/">Trang chủ</a>
+						</li>
+						<li><a class="nav-link" th:href="@{/web/product/0/page/1}">Cửa hàng</a></li>
+						<li><a class="nav-link" href="about.html">Giới thiệu</a></li>
+						<li><a class="nav-link" href="blog.html">Tin tức</a></li>
+						<li><a class="nav-link" href="contact.html">Liên hệ</a></li>
+					</ul>
+
+					<ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 d-flex justify-content-between">
+						<li class="nav-item dropdown" sec:authorize="isAnonymous()" style="margin-right: 20px;">
+							<a sec:authorize="isAnonymous()" th:href="@{/auth/login}" class="nav-link">
+								<i class="fa-solid fa-user"></i>	
+							</a>
+						</li>
+						<li class="nav-item dropdown-center" sec:authorize="isAuthenticated()" style="margin-right: 20px; ">
+							<a class="dropdown-toggle nav-link" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								<i class="fa-solid fa-user"></i>
+							</a>
+							<ul class="dropdown-menu" style="left: -45px;">
+								<li><a sec:authorize="hasAuthority('ADMIN')" class="dropdown-item" th:href="@{/admin}">Admin</a></li>
+								<li><a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/web/users/my-account}">My profile</a></li>
+								<li><a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/auth/logout}">Logout</a></li>
+							</ul>
+						</li>
+						<li>
+							<a class="nav-link position-relative" th:href="@{/cart}">
+								<span sec:authorize="isAuthenticated()" class="position-absolute translate-middle badge rounded-pill bg-danger bg-cart border-light border border-2">
+							    	<span id="cartQty" class="animated bounceIn">0</span>
+							  	</span>
+								<i class="fa-solid fa-cart-shopping"></i>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</body>
+
+</html>

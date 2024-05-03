@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<head>
+	<style>
+		.product-container {
+			display: flex;
+			align-items: center;
+			/* Dọc giữa theo chiều cao */
+		}
+
+		.aside {
+			margin-right: 10px;
+			margin-bottom: 10px;
+			/* Điều chỉnh khoảng cách giữa ảnh và nội dung nếu cần */
+		}
+	</style>
+</head>
+
+<body>
+
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content" class="user">
+
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">User</h1>
+					</div>
+				</div>
+				<div class="container">
+					<div th:if="${message != null}">
+						<span th:text="${message}"></span>
+					</div>
+
+					<div class="row align-items-start">
+						<div class="nav flex-column nav-pills col-md-3" id="v-pills-tab" role="tablist"
+							aria-orientation="vertical">
+							<div class="avatar">
+								<i class="fa-solid fa-user text-secondary"></i>
+								<span th:text="'#' + ${user.fullName}" class="fs-5 text-secondary"></span>
+							</div>
+							<button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+								data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+								aria-selected="true">Tài khoản</button>
+							<button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
+								data-bs-target="#v-pills-profile" type="button" role="tab"
+								aria-controls="v-pills-profile" aria-selected="false">Địa chỉ</button>
+							<button class="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill"
+								data-bs-target="#v-pills-disabled" type="button" role="tab"
+								aria-controls="v-pills-disabled" aria-selected="false">Đơn hàng</button>
+							<button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+								data-bs-target="#v-pills-messages" type="button" role="tab"
+								aria-controls="v-pills-messages" aria-selected="false" onclick="window.location.href = '/auth/logout' ">Thoát</button>
+						</div>
+						<div class="tab-content col-md-9" id="v-pills-tabContent">
+							<div class="tab-pane fade show active" style="margin-left: 15px;" id="v-pills-home"
+								role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+								<form action="/web/users/saveOrUpdate" class="" method="POST">
+									<div class="card">
+										<div class="card-body">
+											<div class="mb-3">
+												<label for="userId" class="form-label">user ID:</label>
+												<input type="hidden" th:value="${true}" th:name="isEdit">
+												<input type="text" readonly="readonly" class="form-control"
+													th:value="${user.userId}" id="userId" th:name="userId"
+													aria-describedby="userId">
+											</div>
+											<div class="mb-3">
+												<label for="fullName" class="form-label">Full name:</label>
+												<input type="text" class="form-control" th:value="${user.fullName}"
+													id="fullName" th:name="fullName">
+											</div>
+											<div class="mb-3">
+												<label for="email" class="form-label">user email:</label>
+												<input type="text" class="form-control" th:value="${user.email}"
+													id="email" th:name="email">
+											</div>
+											<div class="mb-3">
+												<label for="password" class="form-label">user password:</label>
+												<input type="password" class="form-control" th:value="${user.password}"
+													id="password" th:name="password">
+											</div>
+											<div class="mb-3">
+												<label for="phone" class="form-label">user phone:</label>
+												<input type="text" class="form-control" th:value="${user.phone}"
+													id="phone" th:name="phone">
+											</div>
+											<div class="mb-3">
+												<label for="address" class="form-label">user address:</label>
+												<input type="text" class="form-control" th:value="${user.address}"
+													id="address" th:name="address">
+											</div>
+										</div>
+										<div class="card-footer text-muted">
+											<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>
+												<span th:text="${user.isEdit ? 'Update' : 'Save'}"></span>
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<div class="tab-pane fade" style="margin-left: 15px;" id="v-pills-profile" role="tabpanel"
+								aria-labelledby="v-pills-profile-tab" tabindex="0">
+								<form th:action="@{'/web/users/updateAddress/' + ${user.email}}" method="POST">
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label for="inputCity">Tỉnh/Thành phố </label>
+											<input type="text" class="form-control" id="inputCity" name="city"
+												placeholder="" th:value="${city}">
+										</div>
+										<div class="form-group col-md-6">
+											<label for="inputDistrict">Quận/Huyện </label>
+											<input type="text" class="form-control" id="inputDistrict" name="district"
+												placeholder="" th:value="${district}">
+										</div>
+										<div class="form-group col-md-6">
+											<label for="inputTown">Xã/Phường </label>
+											<input type="text" class="form-control" id="inputTown" name="town"
+												placeholder="" th:value="${town}">
+										</div>
+
+									</div>
+									<div class="form-group">
+										<label for="inputAddr">Địa chỉ</label>
+										<input type="text" class="form-control" id="inputAddr" name="homeaddress"
+											placeholder="" th:value="${homeaddress}">
+									</div>
+									<!-- Các trường ẩn khác nếu cần -->
+									<input type="hidden" th:value="${true}" th:name="isEdit">
+									<div class="card-footer text-muted">
+										<button class="btn btn-primary" type="submit">
+											<i class="fas fa-save"></i>
+											<span th:text="${user.isEdit ? 'Update' : 'Save'}"></span>
+										</button>
+									</div>
+								</form>
+
+							</div>
+							<div class="tab-pane fade" id="v-pills-disabled" role="tabpanel"
+								aria-labelledby="v-pills-disabled-tab" tabindex="0">
+
+
+								<ul class="row">
+									<li th:each="order : ${listOrder}">
+										<hr>
+										<div>
+											<h6 th:text="'Mã đơn hàng: ' + ${order.orderId}"></h6>
+											<h6 th:text="'Ngày đặt hàng: ' + ${order.date}"></h6>
+											<h6 th:text="'Phương thức thanh toán: ' + ${order.payment_method}"></h6>
+											<h6>
+												Trạng thái đơn hàng:
+												<span
+													th:class="${order.status != null && order.status == 1 ? 'text-success' : 'text-danger'}"
+													th:text="${order.status != null && order.status == 1 ? 'Đơn hàng đã giao' : 'Đơn hàng chưa giao'}"></span>
+											</h6>
+										</div>
+										<div th:each="orderDetail : ${listOderDetail}"
+											th:if="${orderDetail.order.orderId == order.orderId}">
+											<div th:each="product : ${listPro}"
+												th:if="${orderDetail.product.proId == product.proId}">
+												<div class="product-container">
+													<div class="aside">
+														<img th:src="${product.image_link}" class="img-sm border"
+															width="100" height="100">
+													</div>
+													<div>
+														<p class="title" th:text="${product.name}"></p>
+														<p class="title" style="color: rgb(238, 77, 45);"
+															th:text="${#numbers.formatDecimal(product.price, 0, 0)} + '.000 đ - SL: ' + ${orderDetail.quantity}">
+														</p>
+													</div>
+
+
+												</div>
+											</div>
+										</div>
+										<h5 th:utext="'Tổng tiền: ' + 
+								               ${order.currency eq 'VND' ? 
+								                 #numbers.formatDecimal(order.total, 0, 'POINT', 0, 'POINT') + ' đ' : 
+								                 order.total + ' USD'}">
+										</h5>
+
+									</li>
+									<hr>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+
+	<!--Thêm dòng này vào-->
+	<div layout:fragment="content">
+		<div class="container">
+			My profile của [[${user.fullName}]]
+		</div>
+
+		<div class="modal fade" id="loginModal" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Login</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-6">
+								<form th:action="@{/auth/login}" method="post">
+									<input class="text-center rounded" type="text" name="username"
+										th:attr="placeholder=username" required minlength="4" maxlength="30" />
+									<input class="text-center rounded" type="password" name="password"
+										th:attr="placeholder=password" required minlength="3" maxlength="40" />
+									<button type="submit" class="btn-block rounded" style="height: 35px;">Sign In
+									</button>
+								</form>
+								<div class="modal-footer d-flex justify-content-center">
+								<span class="message text-center">
+									Not registered?<a th:href="@{/registration}"><br>Create
+										new account</a>
+								</span>
+							</div>
+							</div>
+							
+							<div class="col-md-6">
+								<form th:action="@{/auth/login}" method="post">
+									<input class="text-center rounded" type="text" name="username"
+										th:attr="placeholder=username" required minlength="4" maxlength="30" />
+									<input class="text-center rounded" type="password" name="password"
+										th:attr="placeholder=password" required minlength="3" maxlength="40" />
+									<button type="submit" class="btn-block rounded" style="height: 35px;">Sign In
+									</button>
+								</form>
+								<div class="modal-footer d-flex justify-content-center">
+								<span class="message text-center">
+									Not registered?<a th:href="@{/registration}"><br>Create
+										new account</a>
+								</span>
+							</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+</body>
+
+</html>

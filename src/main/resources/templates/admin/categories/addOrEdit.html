@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout-admin.html}">
+
+<body>
+	
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content">
+		
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container-fluid">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800"></h1>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<form action="/admin/categories/saveOrUpdate" method="POST">
+
+						<div class="card">
+
+							<div class="card-header">
+								<h2 th:text="${category.isEdit ? 'Edit Category' : 'Add New Category'}">
+								</h2>
+							</div>
+
+							<div class="card-body">
+
+								<div class="mb-3">
+
+									<label for="cateId" class="form-label">Category ID:</label>
+
+									<input type="hidden" th:value="${category.isEdit}">
+
+									<input type="text" readonly="readonly" class="form-control"
+										th:value="${category.cateId}" id="cateId" th:name="cateId"
+										aria-describedby="categoryIdid">
+
+								</div>
+
+								<div class="mb-3">
+
+									<label for="categoryname" class="form-label">Category Name:</label>
+
+									<input type="text" class="form-control" th:value="${category.name}"
+										id="name" th:name="name">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="logo" class="form-label">Category Logo:</label>
+
+									<input type="text" class="form-control" th:value="${category.logo}"
+										id="logo" th:name="logo">
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="card-footer text-muted">
+							<a href="/admin/categories/add" class="btn btn-secondary"><i class="fas fa-new"></i> New</a>
+							<a href="/admin/categories" class="btn btn-success"><i class="fas fa-bars"></i> List
+								Categories</a>
+							<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>
+								<span th:text="${category.isEdit ? 'Update' : 'Save'}"></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

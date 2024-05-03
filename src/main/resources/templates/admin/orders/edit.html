@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout-admin.html}">
+
+<body>
+	
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content">
+		
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container-fluid">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800"></h1>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<form action="/admin/orders/saveOrUpdate" method="POST">
+
+						<div class="card">
+
+							<div class="card-header">
+								<h2 th:text="'Edit Order'">
+								</h2>
+							</div>
+
+							<div class="card-body">
+
+								<div class="mb-3">
+
+									<label for="orderId" class="form-label">Order ID:</label>
+
+
+									<input type="number" readonly="readonly" class="form-control"
+										th:value="${order.orderId}" id="orderId" th:name="orderId"
+										aria-describedby="orderIdid">
+
+								</div>
+
+								<div class="mb-3">
+
+									<label for="userId" class="form-label">User ID:</label>
+
+									<input type="number" class="form-control" th:value="${order.userId}"
+										id="userId" th:name="userId">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="order_date" class="form-label">Order Date:</label>
+
+									<input type="date" class="form-control" th:value="${order.order_date}"
+										id="order_date" th:name="order_date">
+
+								</div>
+								<div class="mb-3">
+
+									<label for="payment_method" class="form-label">Payment Method:</label>
+
+									<input type="text" class="form-control" th:value="${order.payment_method}"
+										id="payment_method" th:name="payment_method">
+
+								</div>
+								<div class="mb-3">
+
+									<label for="shipping_method" class="form-label">Shipping Method:</label>
+
+									<input type="text" class="form-control" th:value="${order.shipping_method}"
+										id="shipping_method" th:name="shipping_method">
+
+								</div>
+			<div class="mb-3">
+    <label for="order_status" class="form-label">Order Status:</label>
+    <select class="form-control" id="order_status" name="order_status">
+        <option th:value="true"  th:selected="${order.order_status == true}">True</option>
+        <option th:value="false"  th:selected="${order.order_status == false}">False</option>
+    </select>
+</div>
+
+								<div class="mb-3">
+
+									<label for="order_total" class="form-label">Order Total:</label>
+
+									<input type="number" class="form-control" th:value="${order.order_total}"
+										id="order_total" th:name="order_total">
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="card-footer text-muted">
+							<a href="/admin/orders" class="btn btn-success"><i class="fas fa-bars"></i> List
+								Order</a>
+							<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>
+								<span th:text="${order.isEdit ? 'Update' : 'Save'}"></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

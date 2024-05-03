@@ -1,0 +1,145 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+	<div layout:fragment="content" class="page-product">
+		<div class="site-section mt-5">
+			<div class="container">
+				<form th:action="@{/web/product/search}" method="get">
+					<div class="container mt-4">
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+							<div class="input-group">
+								<input name="searchPro" type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+								<div class="input-group-append">
+									<button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				</form>
+				<div class="row">
+					<!-- sidebar -->
+					
+					<div class="col-lg-3">
+						<div class="fs-6 fw-semibold text-secondary filter" style="border-bottom:2px solid #ddd; margin-bottom: 10px;">
+							DANH MỤC SẢN PHẨM
+						</div>
+						<select class="mb-5" id="mySelect" onchange="location=this.value;">	
+							<option th:value="@{/web/product/0/page/1}">Select Category</option>
+							<option th:each="t : ${listAllCategory}"
+								th:value="@{'/web/product/' + ${t.cateId} + '/page/' + '1'}" th:text="${t.name}"
+								th:class="${t.cateId == targetactive ? 'selected' : ''}" th:selected="${t.cateId == selectedCategoryId}"></option>
+						</select>
+						<div class="fs-6 fw-semibold text-secondary filter" style="border-bottom:2px solid #ddd; margin-bottom: 10px;">
+							DANH SÁCH NHÃN HÀNG
+						</div>
+						<select class="mb-5" id="mySelectBrand" onchange="location=this.value;">	
+							<option th:value="@{'/web/product/0/page/1?brandID=0'}">Select Brand</option>
+							<option th:each="t : ${listAllBrand}"
+								th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?brandID=' + ${t.brandId}}" th:text="${t.name}"
+								th:class="${t.brandId == targetactive ? 'selected' : ''}" th:selected="${t.brandId == brandID}"></option>
+						</select>
+						<div class="fs-6 fw-semibold text-secondary filter" style="border-bottom:2px solid #ddd; margin-bottom: 10px;">
+							LỌC THEO GIÁ
+						</div>
+						<form action="" method="get">
+							<div>
+								<input type="hidden" id="range-price-min" th:value="${min_price}" name="min_price" />
+								<input type="hidden" id="range-price-max" th:value="${max_price}" name ="max_price"/>
+								<input type="hidden" th:value="${brandID}" name ="brandID"/>
+							</div>
+							<div>
+								<input type="text" class="js-range-slider" value="" 
+									data-type="double"
+									th:attr="data-type='double', data-min=${min_price}, data-max=${max_price}, data-from=${min_form}, data-to=${max_form}, data-skin='round'" />
+							</div>
+							<div class="mb-3 mt-3 d-flex justify-content-between align-items-center">
+								<span>Giá:</span> 
+								<div>
+									<span id="ui-price-min">[[${min_form}]].000đ</span> - <span id="ui-price-max">[[${max_form}]].000đ</span>
+								</div>
+							</div>
+							
+							<button type="submit"
+								class="btn btn-white w-100 border border-secondary">LỌC</button>
+						</form>
+					</div>
+					<!-- sidebar -->
+					<!-- content -->
+					<div class="col-lg-9">
+						<header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+							<strong class="d-block fs-6 product-found">[[${countPro}]] sản phẩm được tìm thấy <i class="fa-solid fa-check"></i> </strong>
+							<div class="ms-auto">
+								<select class="form-select d-inline-block w-auto border pt-1" onchange="location=this.value;">
+									<option th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?orderby=menu_order' + '&brandID=' + ${brandID}}" th:selected="${orderby == 'menu_order'}">Thứ tự mặc định</option>
+									<option th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?orderby=selling'+ '&brandID=' + ${brandID}}" th:selected="${orderby == 'selling'}">Thứ tự theo mực độ bán chạy</option>
+									<option th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?orderby=date'+ '&brandID=' + ${brandID}}" th:selected="${orderby == 'date'}">Mới nhất</option>
+									<option th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?orderby=price'+ '&brandID=' + ${brandID}}" th:selected="${orderby == 'price'}">Theo thứ tự giá: thấp đến cao</option>
+									<option th:value="@{'/web/product/' + ${cateID} + '/page/' + '1?orderby=price-desc'+ '&brandID=' + ${brandID}}" th:selected="${orderby == 'price-desc'}">Theo thứ tự giá: cao đến thấp</option>
+								</select>								
+							</div>
+						</header>
+
+						<div class="row">
+
+							<th:block th:each="p : ${listAllProduct}">
+								<div class="product col-lg-4 col-md-6 col-sm-6 d-flex">
+									<div class="card w-100 my-2 shadow-2-strong">
+										<a class="image" style="display: inline-block; text-decoration: none;" th:href="'/web/product/detail/' + ${p.proId}">
+											<img th:src="${p.image_link}" class="card-img-top"
+											style="aspect-ratio: 1 / 1" />
+											<div class="overlay">
+												<span th:attr="data-proid=${p.proId}" class="buyNow">Mua ngay</span>
+												<span th:attr="data-proid=${p.proId}" class="addToCart">Thêm vào giỏ hàng</span>
+											</div>
+										</a>
+										<div class="card-body d-flex flex-column justify-content-between">										
+											<a th:href="'/web/product/detail/' + ${p.proId}" class="card-text text-center fw-normal">[[${p.name}]]</a>
+											<h5 class="card-title text-center mt-1">
+												<span th:if="${p.sale > 0}" class="text-body-tertiary text-decoration-line-through"
+													th:text="${#numbers.formatDecimal(p.price, 0, 0)} + '.000 đ'"></span>
+												<span class="fw-bold"
+													th:text="${#numbers.formatDecimal(p.price * (100 - p.sale) / 100, 0, 0) } + '.000 đ'"></span>
+											</h5>
+										</div>
+									</div>
+								</div>
+							</th:block>
+						</div>
+
+						<hr />
+
+						<!-- Pagination -->
+						<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+							<ul class="pagination">
+								<li class="page-item">
+									<a th:if="${currentPage != 1}" class="page-link"
+										th:href="@{'/web/product/' + ${cateID} + '/page/1' + '?brandID=' +${brandID} + '&orderby=' + ${orderby}}">Trang
+										đầu</a>
+									<span th:if="${currentPage == 1}" class="page-link">Trang
+										đầu</span>
+								</li>
+								<th:block th:each="i : ${#numbers.sequence(startPage, endPage)}">
+									<li th:class="${i == currentPage ? 'page-item active' : 'page-item'}">
+										<a class="page-link" th:href="@{'/web/product/' + ${cateID} + '/page/' + ${i} + '?brandID=' +${brandID} + '&orderby=' + ${orderby}}"
+											th:text="${i}"></a>
+									</li>
+								</th:block>
+								<li class="page-item">
+									<a th:if="${currentPage != lastPage}" class="page-link"
+										th:href="@{'/web/product/' + ${cateID} + '/page/' + ${lastPage} + '?brandID=' +${brandID} + '&orderby=' + ${orderby}}">Trang cuối</a>
+									<span th:if="${currentPage == lastPage}" class="page-link">Trang cuối</span>
+								</li>
+							</ul>
+						</nav>
+						<!-- Pagination -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

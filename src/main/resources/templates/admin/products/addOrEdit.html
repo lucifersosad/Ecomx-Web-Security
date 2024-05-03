@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout-admin.html}">
+
+<body>
+	
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content" class="product-admin">
+		
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container-fluid">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800"></h1>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<form action="/admin/products/saveOrUpdate" th:object="${product}" method="POST">
+
+						<div class="card">
+
+							<div class="card-header">
+								<h2 th:text="${product.isEdit ? 'Edit Product' : 'Add New Product'}">
+								</h2>
+							</div>
+
+							<div class="card-body">
+
+								<div class="mb-3">
+
+									<label for="proId" class="form-label">Product ID:</label>
+
+									<input type="hidden" th:value="${product.isEdit}">
+
+									<input type="text" readonly="readonly" class="form-control"
+										th:value="${product.proId}" id="proId" th:name="proId"
+										aria-describedby="productId">
+
+								</div>
+
+								<div class="mb-3">
+
+									<label for="name" class="form-label">Product Name:</label>
+
+									<input type="text" class="form-control" th:value="${product.name}"
+										id="name" th:name="name">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="description" class="form-label">Description:</label>
+
+									<textarea type="text" class="form-control"
+										id="description" th:name="description" th:value="${product.description}" rows="7" th:text="${product.description}"></textarea>
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="stock" class="form-label">Stock:</label>
+
+									<input type="number" class="form-control" th:value="${product.stock}"
+										id="stock" th:name="stock">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="sale" class="form-label">Sale:</label>
+
+									<input type="number" class="form-control" th:value="${product.sale}"
+										id="sale" th:name="sale">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="price" class="form-label">Price:</label>
+
+									<input type="number" class="form-control" th:value="${product.price}"
+										id="price" th:name="price">
+
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="image_link" class="form-label">Image Link:</label>
+
+									<textarea type="text" class="form-control" th:value="${product.image_link}"
+										id="image_link" th:name="image_link" th:text="${product.image_link}" rows="2"></textarea>
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="category" class="form-label">Category:</label>
+
+									<select id="category" th:field="*{cateId}">
+										<option th:each="category : ${categories}" 
+									            th:value="${category.cateId}"
+									            th:text="${category.name}">
+   										 </option>
+									</select>
+								</div>
+								
+								<div class="mb-3">
+
+									<label for="brand" class="form-label">Brand:</label>
+
+									<select id="brand" th:field="*{brandId}">
+										<option th:each="brand : ${brands}" 
+									            th:value="${brand.brandId}" 
+									            th:text="${brand.name}">
+   										 </option>
+									</select>
+								</div>
+								
+
+							</div>
+
+						</div>
+
+						<div class="card-footer text-muted">
+							<a href="/admin/products/add" class="btn btn-secondary"><i class="fas fa-new"></i> New</a>
+							<a href="/admin/products" class="btn btn-success"><i class="fas fa-bars"></i> List Products</a>
+							<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>
+								<span th:text="${product.isEdit ? 'Update' : 'Save'}"></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>

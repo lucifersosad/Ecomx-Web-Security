@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{web/layout-default.html}">
+
+<body>
+
+	<!--Thêm dòng này vào-->
+	<div layout:fragment="content" class="checkout">
+		<section class="container mt-5 checkout__question">
+			<button id="layma">Lấy mã</button>
+			<div id="magiamgia"></div>
+			<div id="mess" style="color: lightgreen; text-align: center;"></div>
+			<div id="error" style="color: lightcoral; text-align: center;"></div>
+			<p class="mb-1">
+				<span class="text-black-50">Bạn có mã ưu đãi? </span> <a
+					class="checkout__couppon-btn" data-bs-toggle="collapse"
+					href="#collapseExample" role="button" aria-expanded="false"
+					aria-controls="collapseExample" id="anvaoday"> Ấn vào đây để
+					nhập mã </a>
+			</p>
+			<div class="collapse mb-2" id="collapseExample">
+				<div class="card card-body checkout__couppon-card">
+					<p class="text-black-50">Nếu bạn có mã giảm giá, vui lòng điền
+						vào phía bên dưới.</p>
+					<div class="input-group">
+						<!--<input type="text" class="form-control" placeholder="Mã ưu đãi" />-->
+						<input type="text" class="form-control" th:value="${promo}"
+							name="promo" id="promoInput" />
+						<button type="button" class="btn btn-secondary" id="applydiscount">Áp
+							dụng</button>
+					</div>
+
+				</div>
+			</div>
+			<p>
+				<span class="text-black-50">Bạn muốn thay đổi thông tin thanh
+					toán? </span> <a class="checkout__couppon-btn" onclick="updateUser()"
+					style="cursor: pointer;"> Thay đổi thông tin </a>
+			</p>
+
+			<p id="thong-bao" class="text-danger"></p>
+		</section>
+		<section class="container mb-5">
+			<div class="row">
+				<div class="col-md-7">
+					<form class="colorlib-form">
+						<div class="d-flex justify-content-between align-items-center">
+							<h3>
+								<strong>Thông tin thanh toán</strong>
+							</h3>
+							<button class="btn btn-primary btn-update" style="display: none;"
+								onclick="updateAddress()">Thay đổi</button>
+						</div>
+						<div class="row">
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="email">Email</label> <input type="text" id="email"
+										th:name="email" class="form-control" th:value="${user.email}"
+										placeholder="Email của bạn" disabled>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="fullName">Họ và tên*</label> <input type="text"
+										id="fullName" class="form-control"
+										placeholder="Họ và tên của bạn" th:value="${user.fullName}"
+										th:name="fullName" disabled required>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="phone">Số điện thoại*</label> <input type="text"
+										id="phone" th:name="phone" class="form-control"
+										th:value="${user.phone}" placeholder="Số điện thoại của bạn"
+										disabled required>
+								</div>
+							</div>
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="city">Tỉnh/Thành phố*</label> <input type="text"
+										id="city" name="city" class="form-control" th:value="${city}"
+										disabled required>
+								</div>
+							</div>
+
+							<div class="form-group col-md-12">
+								<label for="district">Quận/Huyện*</label> <input type="text"
+									id="district" name="district" class="form-control"
+									th:value="${district}" disabled required>
+							</div>
+
+							<div class="form-group col-md-12">
+								<label for="town">Xã/Phường*</label> <input type="text" id="town"
+									name="town" class="form-control" th:value="${town}" disabled required>
+							</div>
+
+							<div class="form-group col-md-12">
+								<label for="fname">Địa chỉ*</label> <input type="text"
+									id="address" name="address" class="form-control"
+									th:value="${homeaddress}" disabled th:required>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-5">
+					<div class="row">
+						<div class="col-md-12">
+							<form action="/CheckOut/Payment" method="post">
+								<div class="cart-detail">
+									<h3>
+										<strong>Đơn hàng của bạn</strong>
+									</h3>
+
+									<div class="product-list">
+										<!-- Sử dụng th:each để lặp qua danh sách sản phẩm -->
+										<div th:each="item : ${list}" class="product-info">
+											<div class="row align-items-center">
+												<div class="col-md-9">
+													<div class="product-name">
+														<span class="quantity"> <strong>[[${item.quantity.quantity}]]</strong><span
+															class="bold-x"> x</span>
+														</span> [[${item.product.name}]]
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="total">[[${#numbers.formatDecimal(item.tong,
+														0, 'POINT', 0, 'POINT')}]].000 đ</div>
+												</div>
+											</div>
+										</div>
+										<div class="product-info">
+											<div class="row align-items-center">
+												<div class="col-md-9">
+													<div class="quantity product-name text-body-tertiary">Tạm tính</div>
+												</div>
+												<div class="col-md-3">
+													<div class="total text-body-tertiary" id="subTotalValue">[[${#numbers.formatDecimal(total,
+														0, 'POINT', 0, 'POINT')}]].000 đ</div>
+												</div>
+											</div>
+										</div>
+										<div class="product-info">
+											<div class="row align-items-center">
+												<div class="col-md-9">
+													<div class="quantity product-name text-body-tertiary">Giảm giá</div>
+												</div>
+												<div class="col-md-3">
+													<div class="total text-body-tertiary" id="discountvalue">0 đ</div>
+												</div>
+											</div>
+										</div>
+										<div class="product-info" id="codOption" style="display: none">
+											<div class="row align-items-center">
+												<div class="col-md-9">
+													<div class="quantity product-name text-body-tertiary">Phí cod</div>
+												</div>
+												<div class="col-md-3">
+													<div class="total text-body-tertiary" id="codValue">30.000 đ</div>
+												</div>
+											</div>
+										</div>
+										<div class="product-info">
+											<div class="row align-items-center">
+												<div class="col-md-9">
+													<div class="quantity product-name fw-bold">Tổng</div>
+												</div>
+												<div class="col-md-3">
+													<div class="total fw-bold" id="totalValue">[[${#numbers.formatDecimal(total,
+														0, 'POINT', 0, 'POINT')}]].000 đ</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<h3>
+										<strong>Phương thức thanh toán</strong>
+									</h3>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" Checked="True"
+													name="paymentMethod" id="cod" class="optradio" value="COD">
+													Thanh toán khi nhận hàng</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="paymentMethod"
+													id="paypal" class="optradio" value="PayPal"> PAYPAL</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+												<label><input type="radio" name="paymentMethod"
+													id="vnpay" class="optradio" value="VNPAY"> VNPAY</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<p>
+												<button type="submit" class="btn btn-primary"
+													style="background-color: orange; color: white;">ĐẶT
+													HÀNG</button>
+											</p>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+</body>
+
+</html>

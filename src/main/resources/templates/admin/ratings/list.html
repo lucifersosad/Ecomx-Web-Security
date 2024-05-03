@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout-admin.html}">
+<body>
+	
+	<!--Thêm dòng này vào-->
+	<section layout:fragment="content" class="ratings-admin">
+		
+		<!--Viết nội dung từ đây-->
+		<div class="row">
+			<div class="col mt-4">
+				<div class="container-fluid">
+					<!-- Page Title -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Ratings</h1>
+					</div>
+				</div>
+				<div class="container-fluid site-blocks-table">
+					<div th:if="${message != null}">
+						<span th:text="${message}"></span>
+					</div>
+					<table border="1" width="100vw" class="table table-striped table-bordered table-hover" id="sample_1">
+						<thead>
+							<tr>
+								<th> Rating ID</th>
+								<th>Customer name</th>
+								<th>Contents</th>
+								<th>Platform</th>
+								<th>Stars</th>
+								<th>Date</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${ratings}">
+								<td th:text="${item.ratingId}"></td>
+								<td th:text="${item.nickname}"></td>
+								<td th:text="${item.content}"></td>
+								<td th:text="${item.platform}"></td>
+								<td th:text="${item.rate}"></td>
+								<td th:text="${item.date}"></td>
+								<td>
+									<a th:href="@{'/admin/ratings/delete/' + ${item.ratingId}}" style="display: inline-block; margin-right: 10px;">Delete</a> 
+								    <form th:if="${item.display == 0}" th:action="@{'/admin/ratings/updateState/' + ${item.ratingId} + '/1'}" method="get" style="display: inline-block; margin-right: 10px;">
+								        <button type="submit" style="background-color: green; color: white;">Show</button>
+								    </form>
+								    <form th:if="${item.display == 1}" th:action="@{'/admin/ratings/updateState/' + ${item.ratingId} + '/0'}" method="get" style="display: inline-block;">
+								        <button type="submit" style="background-color: red; color: rgb(255, 255, 0);">Hide</button>
+								    </form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+
+</html>
