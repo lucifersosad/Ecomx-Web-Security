@@ -5,7 +5,7 @@
 	<div layout:fragment="content" class="page-product">
 		<div class="site-section mt-5">
 			<div class="container">
-				<form th:action="@{/web/product/search}" method="get">
+				<form action="@{/web/product/search}" th:action="@{/web/product/search}" method="get">
 					<div class="container mt-4">
 					<div class="row">
 						<div class="col-md-6 offset-md-3">
@@ -19,7 +19,7 @@
 					</div>
 				</div>
 					<!-- Thêm token CSRF -->
-					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				</form>
 				<div class="row">
 					<!-- sidebar -->
@@ -54,7 +54,7 @@
 							</div>
 							<div>
 								<!-- Thêm token CSRF -->
-								<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<input type="text" class="js-range-slider" value="" 
 									data-type="double"
 									th:attr="data-type='double', data-min=${min_price}, data-max=${max_price}, data-from=${min_form}, data-to=${max_form}, data-skin='round'" />
