@@ -216,10 +216,10 @@ public class ProductWebController {
 			ModelMap model,
 			@PathVariable("cateID") Integer cateID,
             @PathVariable("pageNo") Integer pageNo,
-            @RequestParam(name = "orderby", defaultValue = "menu_order") String orderby,
-            @RequestParam(name="min_price", defaultValue = "0") int min_price,
-            @RequestParam(name="max_price", defaultValue = "0") int max_price,
-            @RequestParam(name="brandID", defaultValue = "0") Integer brandID) {	
+            @RequestParam(name = "orderby", defaultValue = "") String orderby,
+            @RequestParam(name="min_price", defaultValue = "") int min_price,
+            @RequestParam(name="max_price", defaultValue = "") int max_price,
+            @RequestParam(name="brandID", defaultValue = "") Integer brandID) {
 		
 		Optional<Category> optCate1 = categoryService.findById(cateID);
 		if (optCate1.isPresent()) {
