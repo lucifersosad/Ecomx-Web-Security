@@ -87,7 +87,7 @@ public class HomeController {
 	    return 0;
 	}
 	
-	@GetMapping("/add-rating")
+	@PostMapping("/add-rating")
 	public String add(@RequestParam("nickname") String nickname,
 	                  @RequestParam("content") String content,
 	                  @RequestParam("platform") String platform,
