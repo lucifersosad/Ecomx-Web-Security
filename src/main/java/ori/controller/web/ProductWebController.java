@@ -73,11 +73,11 @@ public class ProductWebController {
 	@GetMapping("/search")
 	public String searchPro(
 			ModelMap model, 
-			@RequestParam(name = "orderby", defaultValue = "menu_order") String orderby,
+			@RequestParam(name = "orderby", defaultValue = "") String orderby,
 			@RequestParam(name = "searchPro", defaultValue = "") String search,
-			@RequestParam(name = "page", defaultValue = "1") Integer pageNo,
-			@RequestParam(name="min_price", defaultValue = "0") String min_price,
-            @RequestParam(name="max_price", defaultValue = "0") String max_price) {	
+			@RequestParam(name = "page", defaultValue = "") Integer pageNo,
+			@RequestParam(name="min_price", defaultValue = "") String min_price,
+            @RequestParam(name="max_price", defaultValue = "") String max_price) {
 		int pageSize = 21;
 		int totalProducts = proService.searchProductByName(search).size(); // Số lượng sản phẩm tổng cộng trong cơ sở dữ liệu
 		int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
@@ -216,10 +216,10 @@ public class ProductWebController {
 			ModelMap model,
 			@PathVariable("cateID") Integer cateID,
             @PathVariable("pageNo") Integer pageNo,
-            @RequestParam(name = "orderby", defaultValue = "") String orderby,
-            @RequestParam(name="min_price", defaultValue = "") int min_price,
-            @RequestParam(name="max_price", defaultValue = "") int max_price,
-            @RequestParam(name="brandID", defaultValue = "") Integer brandID) {
+            @RequestParam(name = "orderby", defaultValue = "menu_order") String orderby,
+            @RequestParam(name="min_price", defaultValue = "0") int min_price,
+            @RequestParam(name="max_price", defaultValue = "0") int max_price,
+            @RequestParam(name="brandID", defaultValue = "0") Integer brandID) {
 		
 		Optional<Category> optCate1 = categoryService.findById(cateID);
 		if (optCate1.isPresent()) {
