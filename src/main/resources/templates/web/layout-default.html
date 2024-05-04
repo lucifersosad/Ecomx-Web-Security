@@ -74,6 +74,7 @@
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
 	        <button type="submit" class="btn btn-primary">Gửi</button>
 	      </div>
+			  <input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 		  </form>
 	    </div>
 	  </div>

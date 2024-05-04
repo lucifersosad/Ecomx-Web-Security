@@ -18,6 +18,8 @@
 						</div>
 					</div>
 				</div>
+					<!-- Thêm token CSRF -->
+					<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 				</form>
 				<div class="row">
 					<!-- sidebar -->
@@ -51,6 +53,8 @@
 								<input type="hidden" th:value="${brandID}" name ="brandID"/>
 							</div>
 							<div>
+								<!-- Thêm token CSRF -->
+								<input type="text" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 								<input type="text" class="js-range-slider" value="" 
 									data-type="double"
 									th:attr="data-type='double', data-min=${min_price}, data-max=${max_price}, data-from=${min_form}, data-to=${max_form}, data-skin='round'" />
