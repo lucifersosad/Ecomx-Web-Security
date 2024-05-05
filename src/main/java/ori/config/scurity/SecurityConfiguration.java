@@ -4,6 +4,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.CookieSameSiteSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -83,7 +84,7 @@ public class SecurityConfiguration {
         csrfTokenRepository.setCookieHttpOnly(true);
         csrfTokenRepository.setCookieCustomizer(cookie -> {
             cookie.secure(true);
-            cookie.sameSite("Lax");
+            cookie.sameSite("Strict");
         });
     	httpSecurity
         .csrf().csrfTokenRepository(csrfTokenRepository).and()

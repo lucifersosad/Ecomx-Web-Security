@@ -1,5 +1,6 @@
 package ori.controller.web;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,7 +59,7 @@ public class CartController {
 	}
 	
 	@GetMapping("")
-	public String viewCart(ModelMap model) 
+	public String viewCart(ModelMap model, HttpServletRequest request, HttpServletResponse response) 
 	{
 		User userLogged = userService.getUserLogged();
     	List<Cart> list= cartService.findByUserId(userLogged.getUserId());
@@ -87,6 +94,16 @@ public class CartController {
 		}
 		model.addAttribute("list",CartList);
 		model.addAttribute("total", sum);
+		
+		ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
+                .httpOnly(true)
+                .secure(true)
+                //    .domain("localhost")  // host
+                //    .path("/")      // path
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Lax")  // sameSite
+                .build();
+		response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 		return "web/cart";
 	}
 
