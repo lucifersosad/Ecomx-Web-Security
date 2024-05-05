@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,6 +28,7 @@ import ori.utils.Email;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,11 +50,23 @@ public class AuthController {
     private Email email;
 
     @RequestMapping(path = "/auth/login",  method = RequestMethod.GET)
-    public String login(Model model, Principal principal, @RequestParam(name = "message", required = false) String message, HttpServletRequest request) {
+    public String login(Model model, Principal principal, @RequestParam(name = "message", required = false) String message, HttpServletRequest request, HttpServletResponse response) {
     	if (principal != null) {
         	return "redirect:/";
         }
     	String loginStatus = (String) request.getSession().getAttribute("loginStatus");
+    	
+    	ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
+                .httpOnly(true)
+                .secure(true)
+                //    .domain("localhost")  // host
+                //    .path("/")      // path
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Lax")  // sameSite
+                .build();
+
+        // Response to the client
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     	
     	if ("error".equals(message) && "failure".equals(loginStatus)) {
             model.addAttribute("errorMessage", "Tài khoản hoặc mật khẩu không đúng");
@@ -68,7 +83,7 @@ public class AuthController {
 
 
     @RequestMapping(path = "/auth/sign-up", method = RequestMethod.GET)
-    public String signUpForm(Model model, Principal principal, HttpServletRequest request) {
+    public String signUpForm(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) {
     	if (principal != null) {
     		return "redirect:/";
     	}
@@ -76,6 +91,16 @@ public class AuthController {
         System.out.println("[GET] signUpForm");
         model.addAttribute("user", user);
         String errorMessage = (String) request.getSession().getAttribute("errorMessage");
+        
+        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
+                .httpOnly(true)
+                .secure(true)
+                //    .domain("localhost")  // host
+                //    .path("/")      // path
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Lax")  // sameSite
+                .build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         if ("error".equals(errorMessage)) {
         	model.addAttribute("errorMessage", "Đăng kí thất bại");
         }
