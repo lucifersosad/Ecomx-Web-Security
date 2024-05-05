@@ -81,6 +81,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         CookieCsrfTokenRepository csrfTokenRepository = new CookieCsrfTokenRepository();
         csrfTokenRepository.setCookieHttpOnly(true);
+        csrfTokenRepository.setCookieCustomizer(cookie -> {
+            cookie.secure(true);
+            cookie.sameSite("Lax");
+        });
     	httpSecurity
         .csrf().csrfTokenRepository(csrfTokenRepository).and()
         .authorizeHttpRequests(
