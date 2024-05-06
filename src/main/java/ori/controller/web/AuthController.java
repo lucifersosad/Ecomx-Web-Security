@@ -62,7 +62,7 @@ public class AuthController {
                 //    .domain("localhost")  // host
                 //    .path("/")      // path
                 .maxAge(Duration.ofHours(1))
-                .sameSite("Lax")  // sameSite
+                .sameSite("Strict")  // sameSite
                 .build();
 
         // Response to the client
@@ -98,7 +98,7 @@ public class AuthController {
                 //    .domain("localhost")  // host
                 //    .path("/")      // path
                 .maxAge(Duration.ofHours(1))
-                .sameSite("Lax")  // sameSite
+                .sameSite("Strict")  // sameSite
                 .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         if ("error".equals(errorMessage)) {
