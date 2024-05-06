@@ -72,7 +72,7 @@ public class ProductWebController {
 	IBrandService brandService;
 	@GetMapping("/search")
 	public String searchPro() {
-		return "404";
+		return "redirect:/undeveloped";
 	}
 	@GetMapping("/{cateID}/page/{pageNo}")
 	public String viewProduct(

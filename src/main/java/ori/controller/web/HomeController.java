@@ -119,4 +119,9 @@ public class HomeController {
 	    return "redirect:/"; // Điều hướng đến trang chính hoặc trang khác tùy ý
 	}
 
+	@GetMapping("/undeveloped")
+	public String undeloped() {
+		return "undeveloped";
+	}
+
 }
