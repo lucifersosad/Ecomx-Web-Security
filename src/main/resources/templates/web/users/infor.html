@@ -95,6 +95,7 @@
 												<input type="text" class="form-control" th:value="${user.address}"
 													id="address" th:name="address">
 											</div>
+											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 										</div>
 										<div class="card-footer text-muted">
 											<button class="btn btn-primary" type="submit"><i class="fas fa-save"></i>

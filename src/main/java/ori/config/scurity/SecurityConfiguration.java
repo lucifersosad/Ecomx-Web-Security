@@ -81,13 +81,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         CookieCsrfTokenRepository csrfTokenRepository = new CookieCsrfTokenRepository();
-        csrfTokenRepository.setCookieHttpOnly(true);
         csrfTokenRepository.setCookieCustomizer(cookie -> {
             cookie.secure(true);
             cookie.sameSite("Strict");
         });
     	httpSecurity
-        .csrf().csrfTokenRepository(csrfTokenRepository).and()
         .authorizeHttpRequests(
                 auth -> auth
                         .requestMatchers(antMatcher("/admin/**")).hasAnyAuthority(UserRole.ADMIN.getRoleName())
