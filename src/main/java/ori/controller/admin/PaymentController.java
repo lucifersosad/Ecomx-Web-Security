@@ -69,7 +69,7 @@ public class PaymentController {
 		System.out.println("=============================" + discount + "========================================");
 		User user = userService.getUserLogged();
 		RestTemplate restTemplate = new RestTemplate();
-		String apiUrl = "http://localhost:8888/api/payment/paypal/create?userId=" + user.getUserId() + "&discount=" + discount; // Thay đổi URL
+		String apiUrl = "/api/payment/paypal/create?userId=" + user.getUserId() + "&discount=" + discount; // Thay đổi URL
 																										// API cần gọi
 		ResponseEntity<Response> response = restTemplate.getForEntity(apiUrl, Response.class);
 
@@ -89,7 +89,7 @@ public class PaymentController {
 			HttpSession session) {
 		User user = userService.getUserLogged();
 		RestTemplate restTemplate = new RestTemplate();
-		String apiUrl = "http://localhost:8888/api/payment/paypal/success?paymentId=" + paymentId + "&PayerID="
+		String apiUrl = "/api/payment/paypal/success?paymentId=" + paymentId + "&PayerID="
 				+ payerId + "&userId=" + user.getUserId(); // Thay đổi URL API cần gọi
 		ResponseEntity<Response> response = restTemplate.getForEntity(apiUrl, Response.class);
 		String redirectUrl = "";
@@ -114,7 +114,7 @@ public class PaymentController {
 			@RequestParam("PayerID") String payerId) {
 
 		RestTemplate restTemplate = new RestTemplate();
-		String apiUrl = "http://localhost:8888/api/payment/paypal/cancel"; // Thay đổi URL API cần gọi
+		String apiUrl = "/api/payment/paypal/cancel"; // Thay đổi URL API cần gọi
 		ResponseEntity<Response> response = restTemplate.getForEntity(apiUrl, Response.class);
 		String redirectUrl = "";
 		if (response.getStatusCode().is2xxSuccessful()) {
@@ -138,7 +138,7 @@ public class PaymentController {
 			}
 			queryString.append(entry.getKey()).append("=").append(entry.getValue());
 		}
-		String apiUrl = "http://localhost:8888/api/payment/vnpay/return?userId=" + user.getUserId();
+		String apiUrl = "/api/payment/vnpay/return?userId=" + user.getUserId();
 		System.out.println("==============" + apiUrl + "==============");
 		if (queryString.length() > 0) {
 			apiUrl += "&" + queryString.toString();
