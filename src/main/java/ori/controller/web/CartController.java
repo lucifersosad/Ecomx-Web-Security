@@ -98,8 +98,6 @@ public class CartController {
 		ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
                 .httpOnly(true)
                 .secure(true)
-                //    .domain("localhost")  // host
-                //    .path("/")      // path
                 .maxAge(Duration.ofHours(1))
                 .sameSite("Strict")  // sameSite
                 .build();
