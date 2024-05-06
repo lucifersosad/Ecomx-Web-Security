@@ -1,11 +1,14 @@
 package ori.controller.web;
 
 import java.security.Principal;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ori.config.scurity.AuthUser;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import ori.entity.Brand;
 import ori.entity.Cart;
@@ -92,7 +97,7 @@ public class HomeController {
 	                  @RequestParam("content") String content,
 	                  @RequestParam("platform") String platform,
 	                  @RequestParam("rate") int rate,
-	                  ModelMap model) {
+	                  ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 
 	    Rating entity = new Rating();
 	    entity.setNickname(nickname);
@@ -102,6 +107,14 @@ public class HomeController {
 	    entity.setDisplay(0);
 
 	    ratingService.save(entity);
+	    
+	    ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
+                .httpOnly(true)
+                .secure(true)       
+                .maxAge(Duration.ofHours(1))
+                .sameSite("Strict")  // sameSite
+                .build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
 	    return "redirect:/"; // Điều hướng đến trang chính hoặc trang khác tùy ý
 	}

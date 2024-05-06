@@ -59,13 +59,9 @@ public class AuthController {
     	ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
                 .httpOnly(true)
                 .secure(true)
-                //    .domain("localhost")  // host
-                //    .path("/")      // path
                 .maxAge(Duration.ofHours(1))
                 .sameSite("Strict")  // sameSite
                 .build();
-
-        // Response to the client
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     	
     	if ("error".equals(message) && "failure".equals(loginStatus)) {
@@ -95,8 +91,6 @@ public class AuthController {
         ResponseCookie cookie = ResponseCookie.from("JSESSIONID", request.getSession().getId()) // key & value
                 .httpOnly(true)
                 .secure(true)
-                //    .domain("localhost")  // host
-                //    .path("/")      // path
                 .maxAge(Duration.ofHours(1))
                 .sameSite("Strict")  // sameSite
                 .build();
