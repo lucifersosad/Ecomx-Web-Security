@@ -102,6 +102,8 @@
 											</button>
 										</div>
 									</div>
+									<!--CSRF-->
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 								</form>
 							</div>
 
@@ -139,6 +141,8 @@
 											<span th:text="${user.isEdit ? 'Update' : 'Save'}"></span>
 										</button>
 									</div>
+									<!--CSRF-->
+									<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 								</form>
 
 							</div>
